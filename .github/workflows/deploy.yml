@@ -20,13 +20,13 @@ jobs:
           node-version: 20
 
       - name: 의존성(라이브러리) 설치
-        run: npm ci
+        run: pnpm install
 
       - name: .env 파일 생성
         run: echo "${{ secrets.ENV }}" > .env
 
       - name: 빌드
-        run: npm run build
+        run: pnpm run build
 
       - name: 압축
         # NODE_MODULES 폴더는 압축하지 않는다.
@@ -54,6 +54,6 @@ jobs:
             mv /home/ubuntu/nextjs-aws-test/build/nextjs-aws-test.tar.gz /home/ubuntu/nextjs-aws-test/current/nextjs-aws-test.tar.gz
             cd /home/ubuntu/nextjs-aws-test/current
             tar -xvf nextjs-aws-test.tar.gz
-            npm install
+            pnpm install
             pm2 kill
-            pm2 start npm --name "nextjs-app" -- start
+            pm2 start pnpm --name "nextjs-app" -- start
